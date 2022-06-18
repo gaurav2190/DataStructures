@@ -108,6 +108,53 @@ namespace DataStructures
             
             return node;        
         }
+
+        /// <summary>
+        /// Connect nodes at the same level in binary tree.
+        /// </summary>
+        /// <param name="root"></param>
+        /// <returns></returns>
+        public BinaryNode Connect(BinaryNode root) {
+            /**
+            Here we are taking approach of level order traversal of the binary tree where we use queue.
+            with the help of queue and list, we get a list of nodes at the same level.
+            we iterate over that and set the next pointer in each node.
+            return the root.
+            **/
+
+            if(root == null)
+                return null;
+            var queue = new Queue<BinaryNode>();
+            var temp = new List<BinaryNode>();
+
+            queue.Enqueue(root);
+
+            while(queue.Count > 0)
+            {
+                while(queue.Count > 0)
+                {
+                    var item = queue.Dequeue();
+                    temp.Add(item);
+                }
+
+                foreach (var item1 in temp)
+                {
+                    if(item1.left != null)
+                        queue.Enqueue(item1.left);
+                    if(item1.right != null)
+                        queue.Enqueue(item1.right);
+                }
+
+                for(int i = 0; i < temp.Count-1; i++)
+                {
+                    temp[i].next = temp[i+1];
+                }
+
+                temp.Clear();
+            }
+
+            return root;            
+        }
     }
 
     public class TreeNode {
@@ -118,6 +165,26 @@ namespace DataStructures
             this.val = val;
             this.left = left;
             this.right = right;
+        }
+    }
+
+    public class BinaryNode {
+        public int val;
+        public BinaryNode left;
+        public BinaryNode right;
+        public BinaryNode next;
+
+        public BinaryNode() {}
+
+        public BinaryNode(int _val) {
+            val = _val;
+        }
+
+        public BinaryNode(int _val, BinaryNode _left, BinaryNode _right, BinaryNode _next) {
+            val = _val;
+            left = _left;
+            right = _right;
+            next = _next;
         }
     }
 }
