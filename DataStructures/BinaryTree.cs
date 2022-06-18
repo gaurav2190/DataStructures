@@ -78,6 +78,36 @@ namespace DataStructures
 
             return -1;
         }
+
+        public TreeNode BuildTree2(int[] preorder, int[] inorder) {
+            pIndex = -1;
+            var result = BuildTreePreInOrder(preorder, inorder, 0, inorder.Length-1);
+            
+            return result;
+        }
+
+        public TreeNode BuildTreePreInOrder(int[] preorder, int[] inorder, int start, int end)
+        {
+            /**
+            Here logic is different from earlier in the way how we deal with the pIndex;
+            In this case we initialize pIndex with -1 and then start incrementing down the recursion tree
+            we set first left sub tree in this case as Pre order has left subtree elements before right sub tree elements.
+            **/
+            if(start > end)
+                return null;
+            pIndex++;
+            var node = new TreeNode(preorder[pIndex]);
+            
+            if(start == end)
+                return node;
+            
+            var index = SearchIndex(inorder, node.val, start, end);
+            
+            node.left = BuildTreePreInOrder(preorder, inorder, start, index-1);
+            node.right = BuildTreePreInOrder(preorder, inorder, index+1, end);
+            
+            return node;        
+        }
     }
 
     public class TreeNode {
