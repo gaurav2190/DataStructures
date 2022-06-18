@@ -1,5 +1,8 @@
 namespace DataStructures
 {
+    using System.Collections;
+    using System.Collections.Generic;
+    
     public class MyHashSet {
     public LinkedList<int>[] table;
     
