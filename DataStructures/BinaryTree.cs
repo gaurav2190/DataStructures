@@ -155,6 +155,32 @@ namespace DataStructures
 
             return root;            
         }
+
+        public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+            /**
+                Logic is build on DFS algo also preorder
+
+                below we check in both left and right subtree the presence of p and q.
+
+                if present it would return not null object.
+                if for any node both left and right are not null, we return it and keep returning to the top
+                as it is DFS, the condn for the lowest ancestor would be met first which would help in deciding the object.
+
+                for other nodes we would check that either of left or right whichever is not nulll..return it.
+            **/
+
+            if(root == null || root == p || root == q)
+                return root;
+
+            var left = LowestCommonAncestor(root.left, p, q);
+            var right = LowestCommonAncestor(root.right, p, q);
+
+            if(left != null && right != null)
+                return root;
+
+            return left!=null ? left : right;        
+        }       
+        
     }
 
     public class TreeNode {
