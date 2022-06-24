@@ -1,4 +1,8 @@
 namespace DataStructures{
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+
     public class NaryTree
     {
         public IList<int> Preorder(NaryNode root, IList<int> preOrderList = null) {
@@ -72,7 +76,7 @@ namespace DataStructures{
             return result;
         }
 
-        public int MaxDepth(Node root) {
+        public int MaxDepth(NaryNode root) {
             if(root == null)
                 return 0;
             if(root.children == null || root.children.Count == 0)
@@ -102,7 +106,7 @@ namespace DataStructures{
             val = _val;
         }
 
-        public NaryNode(int _val,IList<Node> _children) {
+        public NaryNode(int _val,IList<NaryNode> _children) {
             val = _val;
             children = _children;
         }
