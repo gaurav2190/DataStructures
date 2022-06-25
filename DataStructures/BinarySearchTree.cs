@@ -34,5 +34,82 @@ namespace DataStructures
             
             return root;
         }
+
+        public TreeNode DeleteNode(TreeNode root, int key) {
+            if(root == null)
+                return null;
+            
+            var node = DeleteNodeBST(root, key);
+
+            return node;
+        }
+
+        public TreeNode DeleteNodeBST(TreeNode node, int key)
+        {
+            // edge cases.
+            if(node == null)
+                return null;
+            
+            // when key is less than current node value move left. we return the modified tree hence node.left is assigned.
+            if(key < node.val)
+            {
+                node.left = DeleteNodeBST(node.left, key);
+                return node;
+            }   
+            // when it is greater
+            else if(key > node.val)
+            {
+                node.right = DeleteNodeBST(node.right, key);
+                return node;
+            }   
+            else
+            {
+                // when node.val is equal to key
+                // if it is leaf node ...delete the node from the tree by return null.
+                if(node.left == null && node.right == null)
+                {
+                    return null;
+                }
+                else if(node.left != null && node.right != null)
+                {
+                    // if it has both subtree as not null, then search the smallest in right subtree.
+                    var leftMostNode = SearchLeft(node.right);
+
+                    // replace the current node's value with that.
+                    node.val = leftMostNode.val;
+
+                    // delete the smalled node and assign the resultant tree to the right.
+                    node.right = DeleteNodeBST(node.right, leftMostNode.val);
+
+                    return node;
+                }
+                else if ( node.left != null)
+                {
+                    // if only left is not null, then assign it to current/ simply return it.
+                    var left = node.left;
+                    node = null;
+                    return left;
+                }
+                else
+                {
+                    // similarly for right subtree.
+                    var right = node.right;
+                    node = null;
+                    return right;
+                }
+            }
+        }
+
+        public TreeNode SearchLeft(TreeNode node)
+        {
+            var current = node;
+
+            while(current.left != null)
+            {
+                current = current.left;
+            }
+
+            return current;
+        }
     }
 }
