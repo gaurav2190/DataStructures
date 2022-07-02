@@ -1,50 +1,35 @@
 namespace DataStructures
 {
+    using System.Collections.Generic;
+
     public class QueueImplementation
     {
-        public class QueueNode {
-            public int Data { get; set;}
-            public QueueNode Next {get;set;}
+        public List<int> Elements { get; set; }
 
-            public QueueNode(int data)
-            {
-                this.Data = data;
-            }
+        public int Start { get; set; }
+
+        public QueueImplementation()
+        {
+            this.Start = 0;
+            Elements = new List<int>();
         }
-
-        public QueueNode Head { get; set; }
-
-        public QueueNode Tail { get; set; }
 
         public void Enqueue(int data)
         {
-            var node = new QueueNode(data);
-
-            if(Tail != null)
-                Tail.Next = node;
-            Tail = node;
-
-            if(Head == null)
-                Head = node;
+            this.Elements.Add(data);
         }
 
         public int DeQueue()
         {
-            if(Head == null)
-                return int.MaxValue;
+            if(this.IsEmpty())
+                return int.MinValue;
             
-            var data = Head.Data;
-            Head = Head.Next;
-
-            return data;
+            return this.Elements[this.Start++];
         }
 
-        public int Peek()
+        public bool IsEmpty()
         {
-            if(Head == null)
-                return int.MaxValue;
-            
-            return Head.Data;
+            return this.Start > this.Elements.Count;
         }
     }
 }
