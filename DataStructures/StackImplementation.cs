@@ -1,35 +1,35 @@
 namespace DataStructures
 {
+    using System.Collections.Generic;
+    
     public class StackImplementation
     {
-        public class StackNode
+        public List<int> Elements { get; set; }
+
+        public StackImplementation()
         {
-            public StackNode Next { get; set; }
-
-            public int Data { get; set; }
-
-            public StackNode(int data)
-            {
-                this.Data = data;
-            }
+            Elements = new List<int>();
         }
 
-        public StackNode Top { get; set; }
+        public bool IsEmpty()
+        {
+            return Elements.Count == 0;
+        }
 
         public void Push(int data)
         {
-            var node = new StackNode(data);
-
-            node.Next = Top;
-            Top = node;            
+            Elements.Add(data);
         }
 
         public int Pop()
         {
-            var data = Top.Data;
-            Top = Top.Next;
+            if(IsEmpty())
+                return int.MinValue;
 
-            return data;
+            var item = Elements[Elements.Count - 1];
+            Elements.RemoveAt(Elements.Count - 1);
+
+            return item;
         }
     }
 }
