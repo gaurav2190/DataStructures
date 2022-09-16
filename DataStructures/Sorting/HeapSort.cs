@@ -39,5 +39,48 @@ namespace DataStructures
                 MaxHeapify(nums, heapSize, largest);
             }        
         }
+    
+        public int FindKthLargest(int[] nums, int k) {
+            for(int i = nums.Length/2 - 1; i>=0; i--)
+            {
+                Heapify(nums, i, nums.Length);
+            }
+            
+            for(int i = nums.Length-1; i >0; i--)
+            {
+                var temp = nums[0];
+                nums[0] = nums[i];
+                nums[i] = temp;
+                Heapify(nums, 0, i);
+            }
+            
+            return nums[k-1];
+        }
+        
+        public void Heapify(int[] nums, int index, int size)
+        {
+            var largest = index;
+            
+            var left = 2*index+1;
+            var right = 2*index+2;
+            
+            if(left < size && nums[left] > nums[index])
+            {
+                largest = left;
+            }
+            
+            if(right < size && nums[right] > nums[largest])
+            {
+                largest = right;
+            }
+            
+            if(index != largest)
+            {
+                var temp = nums[index];
+                nums[index] = nums[largest];
+                nums[largest] = temp;
+                Heapify(nums, largest, size);
+            }        
+        }
     }
 }

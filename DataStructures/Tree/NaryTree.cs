@@ -22,17 +22,20 @@ namespace DataStructures{
             return preOrderList;
         }
 
-        public IList<int> Postorder(NaryNode root, IList<int> orderList = null) {
+        public IList<int> Postorder(NaryNode root, IList<int> orderList = null) { 
             if(orderList == null)
                 orderList = new List<int>();
             
             if(root == null)
                 return orderList;
             
+            // first process children
             foreach(var item in root.children)
             {
                 Postorder(item, orderList);
             }
+
+            // then the node.
             orderList.Add(root.val);
                     
             return orderList;
@@ -53,24 +56,19 @@ namespace DataStructures{
             var childrenTemp = new List<NaryNode>();
             NaryNode node = null;
             queue.Enqueue(root);
+            int currentCount = 0;
             while(queue.Count > 0)
             {
-                while(queue.Count > 0)
+                currentCount = queue.Count;
+                while(currentCount > 0)
                 {
                     node = queue.Dequeue();
                     temp.Add(node.val);
-                    if(node.children.Count > 0)
-                        childrenTemp.AddRange(node.children);
+                    currentCount--;
                 }
                 
                 result.Add(new List<int>(temp));
                 temp.Clear();
-                
-                foreach(var item in childrenTemp)
-                {
-                    queue.Enqueue(item);
-                }
-                childrenTemp.Clear();
             }
             
             return result;
@@ -79,11 +77,15 @@ namespace DataStructures{
         public int MaxDepth(NaryNode root) {
             if(root == null)
                 return 0;
+            
+            // termination case for recursion.
             if(root.children == null || root.children.Count == 0)
                 return 1;
             
             int maxDepth = -1;
             int tempDepth = -1;
+             
+            // check for each child at each level.
             foreach(var item in root.children)
             {
                 tempDepth = MaxDepth(item);
@@ -92,6 +94,7 @@ namespace DataStructures{
                     maxDepth = tempDepth;
             }
             
+            // once calculated we add it by 1 to take current node into consideration.
             return maxDepth + 1;
         }
     }
