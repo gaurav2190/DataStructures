@@ -111,5 +111,38 @@ namespace DataStructures
 
             return current;
         }
+    
+        public (TreeNode pre, TreeNode succ) FindPS(TreeNode root, int key)
+        {
+            TreeNode temp = root;
+    
+            while(temp != null)
+            {
+                if(temp.val == key)
+                    break;
+                    
+                if(temp.val < key)
+                    temp = temp.right;
+                else
+                    temp = temp.left;
+            }
+            
+        
+            TreeNode left = temp.left;
+            
+            while(left!= null && left.right != null)
+            {
+                left = left.right;
+            }
+            
+            TreeNode right = temp.right;
+            
+            while(right != null && right.left != null)
+            {
+                right = right.left;
+            }
+            
+            return (left,right);
+        }
     }
 }
